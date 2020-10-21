@@ -352,6 +352,8 @@ static unsigned short getRandomPort();
 			TA(@"-S", @"none");
 			TA(@"-o", @"ControlMaster=no");
 		}
+		
+		TA(@"-o",@"StrictHostKeyChecking=no");
 
 		// If the port forwarding fails, exit - as this is the primary use case for the instance
 		TA(@"-o",@"ExitOnForwardFailure=yes");
@@ -420,6 +422,7 @@ static unsigned short getRandomPort();
 		[taskEnvironment setObject:authenticationAppPath forKey:@"SSH_ASKPASS"];
 		[taskEnvironment setObject:@":0" forKey:@"DISPLAY"];
 		[taskEnvironment setObject:tunnelConnectionName forKey:@"SP_CONNECTION_NAME"];
+		[taskEnvironment setObject:@"/sbin:/bin:/usr/bin:/usr/local/bin" forKey:@"PATH"];
 		[taskEnvironment setObject:tunnelConnectionVerifyHash forKey:@"SP_CONNECTION_VERIFY_HASH"];
 		if (passwordInKeychain) {
 			[taskEnvironment setObject:[[NSNumber numberWithInteger:SPSSHPasswordUsesKeychain] stringValue] forKey:@"SP_PASSWORD_METHOD"];
